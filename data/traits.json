@@ -1,0 +1,32 @@
+[
+	{
+		"id": "extraversion",
+		"name": "Extraversion",
+		"description": "Outgoing, energetic behavior",
+		"thresholds": { "low": -0.33, "high": 0.33 }
+	},
+	{
+		"id": "neuroticism",
+		"name": "Emotional Stability",
+		"description": "Tendency toward anxiety and mood swings",
+		"thresholds": { "low": -0.33, "high": 0.33 }
+	},
+	{
+		"id": "conscientiousness",
+		"name": "Conscientiousness",
+		"description": "Organization and dependability",
+		"thresholds": { "low": -0.33, "high": 0.33 }
+	},
+	{
+		"id": "openness",
+		"name": "Openness",
+		"description": "Curiosity and appreciation for art and ideas",
+		"thresholds": { "low": -0.33, "high": 0.33 }
+	},
+	{
+		"id": "agreeableness",
+		"name": "Agreeableness",
+		"description": "Compassion and cooperation",
+		"thresholds": { "low": -0.33, "high": 0.33 }
+	}
+]
