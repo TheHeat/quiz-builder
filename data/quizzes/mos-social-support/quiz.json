@@ -1,0 +1,153 @@
+{
+	"id": "mos-social-support",
+	"title": "MOS Social Support Survey",
+	"description": "The MOS Social Support Survey measures the availability of support, if needed, in several  domains. It is a 19-item multidimensional, self-administered instrument developed for  patients in the Medical Outcomes Study (MOS), a two-year study conducted at RAND of the  process and outcomes of health care for patients with prevalent and treatable chronic  conditions.",
+	"scale": {
+		"min": 1,
+		"max": 5,
+		"labels": [
+			"None of the time",
+			"A little of the time",
+			"Some of the time",
+			"Most of the time",
+			"All of the time"
+		]
+	},
+	"traits": [
+		{
+			"id": "emotional",
+			"name": "Emotional/informational support",
+			"description": "Someone to confide in, to listen to you, and to provide advice and information"
+		},
+		{
+			"id": "tangible",
+			"name": "Tangible support",
+			"description": "Someone to help with daily chores, prepare  meals, or drive you if needed"
+		},
+		{
+			"id": "affectionate",
+			"name": "Affectionate support",
+			"description": "Someone to show you love and affection,  hug you, and make you feel wanted"
+		},
+		{
+			"id": "positive-social",
+			"name": "Positive social interaction",
+			"description": "Someone to have a good time, do  enjoyable things with, get together with  for relaxation"
+		}
+	],
+	"questions": [
+		{
+			"id": "q1",
+			"text": "Someone to help you if you were confined to bed",
+			"type": "likert",
+			"trait_weights": [{ "traitId": "tangible" }]
+		},
+		{
+			"id": "q2",
+			"text": "Someone you can count on to listen to you  when you need to talk",
+			"type": "likert",
+			"trait_weights": [{ "traitId": "emotional" }]
+		},
+		{
+			"id": "q3",
+			"text": "Someone to give you good advice about a  crisis ",
+			"type": "likert",
+			"trait_weights": [{ "traitId": "emotional" }]
+		},
+		{
+			"id": "q4",
+			"text": "Someone to take you to the doctor if you  needed it ",
+			"type": "likert",
+			"trait_weights": [{ "traitId": "tangible" }]
+		},
+		{
+			"id": "q5",
+			"text": "Someone who shows you love and  affection .",
+			"type": "likert",
+			"trait_weights": [{ "traitId": "affectionate" }]
+		},
+		{
+			"id": "q6",
+			"text": "Someone to have a good time with",
+			"type": "likert",
+			"trait_weights": [{ "traitId": "positive-social" }]
+		},
+		{
+			"id": "q7",
+			"text": "Someone to give you information to help  you understand a situation",
+			"type": "likert",
+			"trait_weights": [{ "traitId": "emotional" }]
+		},
+		{
+			"id": "q8",
+			"text": "Someone to confide in or talk to about  yourself or your problems",
+			"type": "likert",
+			"trait_weights": [{ "traitId": "emotional" }]
+		},
+		{
+			"id": "q9",
+			"text": "Someone who hugs you",
+			"type": "likert",
+			"trait_weights": [{ "traitId": "affectionate" }]
+		},
+		{
+			"id": "q10",
+			"text": "Someone to get together with for relaxation",
+			"type": "likert",
+			"trait_weights": [{ "traitId": "positive-social" }]
+		},
+		{
+			"id": "q11",
+			"text": "Someone to prepare your meals if you  were unable to do it yourself",
+			"type": "likert",
+			"trait_weights": [{ "traitId": "tangible" }]
+		},
+		{
+			"id": "q12",
+			"text": "Someone whose advice you really want",
+			"type": "likert",
+			"trait_weights": [{ "traitId": "emotional" }]
+		},
+		{
+			"id": "q13",
+			"text": "Someone to do things with to help you get  your mind off things",
+			"type": "likert"
+		},
+		{
+			"id": "q14",
+			"text": "Someone to help you with daily chores  if you were sick",
+			"type": "likert",
+			"trait_weights": [{ "traitId": "tangible" }]
+		},
+		{
+			"id": "q15",
+			"text": "Someone to share your most private  worries and fears with",
+			"type": "likert",
+			"trait_weights": [{ "traitId": "affectionate" }]
+		},
+		{
+			"id": "q16",
+			"text": "Someone to turn to for suggestions about  how to deal with a personal problem ",
+			"type": "likert",
+			"trait_weights": [{ "traitId": "emotional" }]
+		},
+		{
+			"id": "q17",
+			"text": "Someone to do something enjoyable with",
+			"type": "likert",
+			"trait_weights": [{ "traitId": "positive-social" }]
+		},
+		{
+			"id": "q18",
+			"text": "Someone who understands your problems",
+			"type": "likert",
+			"trait_weights": [{ "traitId": "emotional" }]
+		},
+		{
+			"id": "q19",
+			"text": "Someone to love and make you feel wanted",
+			"type": "likert",
+			"trait_weights": [{ "traitId": "affectionate" }]
+		}
+	]
+}

@@ -8,9 +8,22 @@ type Props = {
 };
 
 export default function ResultSummary({ quiz, traits, result }: Props) {
+	// scoring API now returns values in the original quiz scale (e.g. 1..5).
+	const formatDisplay = (v: number) =>
+		typeof v === "number" ? v.toFixed(2) : "N/A";
+
 	return (
 		<div>
 			<h2>Results</h2>
+			{typeof result?.average === "number" && (
+				<div style={{ marginBottom: 12 }}>
+					{typeof result?.overall === "number" && (
+						<span>
+							<strong>Overall score:</strong> {formatDisplay(result.overall)}
+						</span>
+					)}
+				</div>
+			)}
 			<div>
 				{traits.map((t) => (
 					<div
@@ -19,10 +32,7 @@ export default function ResultSummary({ quiz, traits, result }: Props) {
 					>
 						<h3>{t.name}</h3>
 						<p>{t.description}</p>
-						<p>
-							Score: {(result.scores[t.id] ?? 0).toFixed(2)} —{" "}
-							{result.classified[t.id]}
-						</p>
+						<p>Score: {formatDisplay(result.scores?.[t.id] ?? NaN)}</p>
 					</div>
 				))}
 			</div>

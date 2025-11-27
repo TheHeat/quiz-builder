@@ -1,7 +1,6 @@
 import { describe, it, expect } from "vitest";
-import { mapLikert, computeTraitScores, classifyTraits } from "../lib/scoring";
-import sampleQuiz from "../../data/quizzes/sample-quiz.json";
-import traits from "../../data/traits.json";
+import { mapLikert, computeTraitScores } from "../lib/scoring";
+import sampleQuiz from "../../data/quizzes/sample-quiz/quiz.json";
 
 describe("scoring", () => {
 	it("maps likert correctly", () => {
@@ -20,16 +19,18 @@ describe("scoring", () => {
 			{ questionId: "q6", value: 5 },
 		];
 
-		const scores = computeTraitScores(
+		const summary = computeTraitScores(
 			sampleQuiz as any,
 			answers as any,
-			traits as any
+			sampleQuiz.traits as any
 		);
-		const classified = classifyTraits(scores, traits as any);
+		const scores = summary.traitScores;
 
-		// extraversion should be high (two questions sum positive)
-		expect(classified["extraversion"]).toBe("high");
-		// conscientiousness should be medium (0)
-		expect(classified["conscientiousness"]).toBe("medium");
+		// extraversion should be above midpoint (two positive contributions)
+		const mid =
+			((sampleQuiz.scale?.min ?? 1) + (sampleQuiz.scale?.max ?? 5)) / 2;
+		expect(scores["extraversion"]).toBeGreaterThan(mid);
+		// conscientiousness should be approximately midpoint (one neutral answer)
+		expect(scores["conscientiousness"]).toBeCloseTo(mid, 5);
 	});
 });

@@ -1,6 +1,6 @@
 {
 	"id": "sample-quiz",
-	"title": "Sample Personality Quiz",
+	"title": "Testing Quiz",
 	"description": "A small example quiz demonstrating Likert items and reverse-coded questions.",
 	"scale": {
 		"min": 1,
@@ -13,6 +13,33 @@
 			"Strongly agree"
 		]
 	},
+	"traits": [
+		{
+			"id": "extraversion",
+			"name": "Extraversion",
+			"description": "Outgoing, energetic behavior"
+		},
+		{
+			"id": "neuroticism",
+			"name": "Emotional Stability",
+			"description": "Tendency toward anxiety and mood swings"
+		},
+		{
+			"id": "conscientiousness",
+			"name": "Conscientiousness",
+			"description": "Organization and dependability"
+		},
+		{
+			"id": "openness",
+			"name": "Openness",
+			"description": "Curiosity and appreciation for art and ideas"
+		},
+		{
+			"id": "agreeableness",
+			"name": "Agreeableness",
+			"description": "Compassion and cooperation"
+		}
+	],
 	"questions": [
 		{
 			"id": "q1",

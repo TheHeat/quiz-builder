@@ -47,6 +47,7 @@ export default function QuizShell({
 				selected={
 					answers.find((a) => a.questionId === current.id)?.value ?? null
 				}
+				quizScale={quiz.scale}
 			/>
 			<div style={{ marginTop: 16 }}>
 				<button

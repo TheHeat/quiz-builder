@@ -1,17 +1,25 @@
 import React from "react";
 import styles from "./LikertScale.module.css";
-import { Question } from "../lib/types";
+import { Question, LikertScale as LikertScaleType } from "../lib/types";
 
 type Props = {
 	question: Question;
 	value: number | null;
 	onChange: (v: number) => void;
+	quizScale?: LikertScaleType;
 };
 
-export default function LikertScale({ question, value, onChange }: Props) {
-	const min = question.scale?.min ?? 1;
-	const max = question.scale?.max ?? 5;
-	const labels = question.scale?.labels;
+export default function LikertScale({
+	question,
+	value,
+	onChange,
+	quizScale,
+}: Props) {
+	// Prefer question-level scale; fall back to quiz-level scale; finally defaults
+	const scale = question.scale ?? quizScale ?? { min: 1, max: 5 };
+	const min = scale.min;
+	const max = scale.max;
+	const labels = scale.labels;
 
 	const options = [] as number[];
 	for (let i = min; i <= max; i++) options.push(i);
@@ -34,18 +42,10 @@ export default function LikertScale({ question, value, onChange }: Props) {
 							checked={value === o}
 							onChange={() => onChange(o)}
 						/>
-						<div>{o}</div>
+						<div>{labels ? labels[o - min] ?? o : o}</div>
 					</label>
 				))}
 			</div>
-			{labels ? (
-				<div className={styles.labels}>
-					<div style={{ display: "flex", justifyContent: "space-between" }}>
-						<span>{labels[0]}</span>
-						<span>{labels[labels.length - 1]}</span>
-					</div>
-				</div>
-			) : null}
 		</div>
 	);
 }

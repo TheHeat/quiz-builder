@@ -8,12 +8,11 @@ export type Trait = {
 	id: string;
 	name: string;
 	description?: string;
-	thresholds?: { low: number; high: number };
 };
 
 export type TraitWeight = {
 	traitId: string;
-	weight: number;
+	weight?: number;
 	reverse?: boolean;
 };
 
@@ -31,6 +30,7 @@ export type Quiz = {
 	description?: string;
 	scale?: LikertScale;
 	questions: Question[];
+	traits?: Trait[];
 };
 
 export type Answer = {
@@ -40,8 +40,23 @@ export type Answer = {
 
 export type TraitScores = Record<string, number>;
 
+export type TraitScoresSummary = {
+	traitScores: TraitScores;
+	/**
+	 * Average of all non-missing trait scores (only traits with contributing
+	 * answered items are included in the mean).
+	 */
+	average: number;
+	/**
+	 * Optional overall score computed across all likert questions in the quiz
+	 * (only present when requested).
+	 */
+	overall?: number;
+};
+
 export type Result = {
 	quizId: string;
 	scores: TraitScores;
-	classified: Record<string, "low" | "medium" | "high">;
+	average?: number;
+	overall?: number;
 };
