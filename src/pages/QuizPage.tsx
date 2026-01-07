@@ -15,10 +15,9 @@ export default function QuizPage() {
 
 	useEffect(() => {
 		if (!slug) return;
-		const modules = import.meta.glob("/data/quizzes/*/quiz.json", { query: "?json" }) as Record<
-			string,
-			() => Promise<any>
-		>;
+		const modules = import.meta.glob("/data/quizzes/*/quiz.json", {
+			query: "?json",
+		}) as Record<string, () => Promise<any>>;
 		const key = `/data/quizzes/${slug}/quiz.json`;
 		const loader = modules[key];
 		if (!loader) {
@@ -41,20 +40,39 @@ export default function QuizPage() {
 
 	function onFinish() {
 		if (!quiz) return;
-		const summary = computeTraitScores(quiz as any, answers as any, quiz.traits ?? [], {
-			includeOverall: true,
-		});
+		const summary = computeTraitScores(
+			quiz as any,
+			answers as any,
+			quiz.traits ?? [],
+			{
+				includeOverall: true,
+			}
+		);
 		const scores = summary.traitScores;
 		setResult({ scores, average: summary.average, overall: summary.overall });
 		setFinished(true);
 	}
 
-	if (!slug) return <div className="wrapper"> <p>No quiz specified.</p> </div>;
-	if (loading) return <div className="wrapper"> <p>Loading…</p> </div>;
+	if (!slug)
+		return (
+			<div className="wrapper">
+				{" "}
+				<p>No quiz specified.</p>{" "}
+			</div>
+		);
+	if (loading)
+		return (
+			<div className="wrapper">
+				{" "}
+				<p>Loading…</p>{" "}
+			</div>
+		);
 	if (!quiz)
 		return (
 			<div className="wrapper">
-				<p>Quiz not found. <Link to="/">Back</Link></p>
+				<p>
+					Quiz not found. <Link to="/">Back</Link>
+				</p>
 			</div>
 		);
 
@@ -71,7 +89,11 @@ export default function QuizPage() {
 					onFinish={onFinish}
 				/>
 			) : (
-				<ResultSummary quiz={quiz as any} traits={quiz.traits ?? []} result={result} />
+				<ResultSummary
+					quiz={quiz as any}
+					traits={quiz.traits ?? []}
+					result={result}
+				/>
 			)}
 		</div>
 	);

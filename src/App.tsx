@@ -7,8 +7,14 @@ export default function App() {
 	return (
 		<BrowserRouter>
 			<Routes>
-				<Route path="/" element={<Home />} />
-				<Route path="/quiz/:slug" element={<QuizPage />} />
+				<Route
+					path="/"
+					element={<Home />}
+				/>
+				<Route
+					path="/quiz/:slug"
+					element={<QuizPage />}
+				/>
 			</Routes>
 		</BrowserRouter>
 	);
