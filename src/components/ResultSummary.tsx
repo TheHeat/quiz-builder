@@ -10,8 +10,16 @@ type Props = {
 
 export default function ResultSummary({ quiz, traits, result }: Props) {
 	// scoring API now returns values in the original quiz scale (e.g. 1..5).
-	const formatDisplay = (v: number) =>
-		typeof v === "number" ? v.toFixed(2) : "N/A";
+	const quizMin = quiz.scale?.min ?? 1;
+	const quizMax = quiz.scale?.max ?? 5;
+
+	const formatNumber = (v: number) =>
+		Number.isInteger(v) ? String(v) : v.toFixed(2);
+
+	const formatFraction = (v: unknown) => {
+		if (typeof v !== "number" || Number.isNaN(v)) return "N/A";
+		return `${formatNumber(v)}/${quizMax}`;
+	};
 
 	return (
 		<div>
@@ -20,7 +28,7 @@ export default function ResultSummary({ quiz, traits, result }: Props) {
 				<div style={{ marginBottom: 12 }}>
 					{typeof result?.overall === "number" && (
 						<span>
-							<strong>Overall score:</strong> {formatDisplay(result.overall)}
+							<strong>Overall score:</strong> {formatFraction(result.overall)}
 						</span>
 					)}
 				</div>
@@ -33,7 +41,7 @@ export default function ResultSummary({ quiz, traits, result }: Props) {
 					>
 						<h3>{t.name}</h3>
 						<p>{t.description}</p>
-						<p>Score: {formatDisplay(result.scores?.[t.id] ?? NaN)}</p>
+						<p>Score: {formatFraction(result.scores?.[t.id] ?? NaN)}</p>
 					</div>
 				))}
 			</div>
@@ -45,6 +53,14 @@ export default function ResultSummary({ quiz, traits, result }: Props) {
 					}}
 				>
 					Take again
+				</button>
+				<button
+					onClick={() => {
+						clearAnswers(quiz.id);
+						window.location.href = "/";
+					}}
+				>
+					Back To Home
 				</button>
 			</div>
 		</div>
