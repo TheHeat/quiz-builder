@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { clearAnswers } from "../lib/persist";
 
 type QuizMeta = { slug: string; title: string; description?: string };
 
@@ -36,6 +37,17 @@ export default function Home() {
 					</li>
 				))}
 			</ul>
+
+			<div style={{ marginTop: 12 }}>
+				<button
+					onClick={() => {
+						quizzes.forEach((q) => clearAnswers(q.slug));
+						alert("Cleared saved answers for all quizzes.");
+					}}
+				>
+					Clear saved answers for all quizzes
+				</button>
+			</div>
 		</div>
 	);
 }
