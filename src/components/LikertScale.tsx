@@ -41,6 +41,7 @@ export default function LikertScale({
 							name={question.id}
 							checked={value === o}
 							onChange={() => onChange(o)}
+							required
 						/>
 						<div>{labels ? labels[o - min] ?? o : o}</div>
 					</label>

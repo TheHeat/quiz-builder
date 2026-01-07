@@ -22,3 +22,11 @@ export function loadAnswers(quizId: string): Answer[] {
 		return [];
 	}
 }
+
+export function clearAnswers(quizId: string) {
+	try {
+		localStorage.removeItem(`${prefix}:answers:${quizId}`);
+	} catch (e) {
+		// ignore
+	}
+}

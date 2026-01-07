@@ -30,6 +30,18 @@ export default function QuizShell({
 		else onFinish();
 	}
 
+	// determine whether the current question has an answer
+	const currentAnswer = answers.find((a) => a.questionId === current.id)?.value;
+
+	function isAnswered(value: Answer["value"]) {
+		if (value === null || value === undefined) return false;
+		if (Array.isArray(value)) return value.length > 0;
+		if (typeof value === "string") return value.trim().length > 0;
+		return true; // numbers and other truthy values
+	}
+
+	const canProceed = isAnswered(currentAnswer);
+
 	function prev() {
 		if (index > 0) setIndex(index - 1);
 	}
@@ -57,7 +69,12 @@ export default function QuizShell({
 				>
 					Back
 				</button>
-				<button onClick={next}>Next</button>
+				<button
+					onClick={next}
+					disabled={!canProceed}
+				>
+					Next
+				</button>
 			</div>
 		</div>
 	);

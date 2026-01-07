@@ -1,5 +1,6 @@
 import React from "react";
 import { Quiz, Trait } from "../lib/types";
+import { clearAnswers } from "../lib/persist";
 
 type Props = {
 	quiz: Quiz;
@@ -37,7 +38,14 @@ export default function ResultSummary({ quiz, traits, result }: Props) {
 				))}
 			</div>
 			<div>
-				<button onClick={() => window.location.reload()}>Take again</button>
+				<button
+					onClick={() => {
+						clearAnswers(quiz.id);
+						window.location.reload();
+					}}
+				>
+					Take again
+				</button>
 			</div>
 		</div>
 	);
