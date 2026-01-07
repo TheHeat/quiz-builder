@@ -21,6 +21,17 @@ export default function ResultSummary({ quiz, traits, result }: Props) {
 		return `${formatNumber(v)}/${quizMax}`;
 	};
 
+	const scoreFor = (id: string) => {
+		const v = result?.scores?.[id];
+		return typeof v === "number" && !Number.isNaN(v)
+			? v
+			: Number.NEGATIVE_INFINITY;
+	};
+
+	const sortedTraits = [...traits].sort(
+		(a, b) => scoreFor(b.id) - scoreFor(a.id)
+	);
+
 	return (
 		<div>
 			<h2>Results</h2>
@@ -34,7 +45,7 @@ export default function ResultSummary({ quiz, traits, result }: Props) {
 				</div>
 			)}
 			<div>
-				{traits.map((t) => (
+				{sortedTraits.map((t) => (
 					<div
 						key={t.id}
 						style={{ marginBottom: 12 }}

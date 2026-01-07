@@ -31,7 +31,8 @@ export default function QuizShell({
 	}
 
 	// determine whether the current question has an answer
-	const currentAnswer = answers.find((a) => a.questionId === current.id)?.value;
+	const rawAnswer = answers.find((a) => a.questionId === current.id)?.value;
+	const currentAnswer = rawAnswer ?? null;
 
 	function isAnswered(value: Answer["value"]) {
 		if (value === null || value === undefined) return false;
@@ -56,9 +57,7 @@ export default function QuizShell({
 			<QuestionRenderer
 				question={current}
 				onAnswer={setAnswer}
-				selected={
-					answers.find((a) => a.questionId === current.id)?.value ?? null
-				}
+				selected={typeof rawAnswer === "number" ? (rawAnswer as number) : null}
 				quizScale={quiz.scale}
 			/>
 			<div style={{ marginTop: 16 }}>
