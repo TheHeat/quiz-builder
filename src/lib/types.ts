@@ -72,11 +72,18 @@ export type Scenario = {
 	options: VolitionalOption[];
 };
 
-export type VolitionalSheet = {
+export type Category = {
 	id: string;
 	title: string;
 	description?: string;
 	scenarios: Scenario[];
+};
+
+export type VolitionalSheet = {
+	id: string;
+	title: string;
+	description?: string;
+	categories: Category[];
 };
 
 export type SelectedOption = {

@@ -6,6 +6,7 @@ import {
 	VolitionalSheetResponse,
 	SelectedOption,
 } from "../lib/types";
+import flattenCategories from "../lib/volitional";
 import {
 	loadVolitionalSheetResponses,
 	saveVolitionalSheetResponses,
@@ -63,7 +64,9 @@ export default function VolitionalSheetPage() {
 	if (loading) return <div className="wrapper">Loading...</div>;
 	if (!sheet) return <div className="wrapper">Sheet not found</div>;
 
-	const currentScenario = sheet.scenarios[currentScenarioIndex];
+	const { scenarios: flatScenarios } = flattenCategories(sheet);
+
+	const currentScenario = flatScenarios[currentScenarioIndex];
 	const scenarioResponse = responses.find(
 		(r) => r.scenarioId === currentScenario.id
 	);
@@ -108,7 +111,7 @@ export default function VolitionalSheetPage() {
 	};
 
 	const handleNextScenario = () => {
-		if (currentScenarioIndex < sheet.scenarios.length - 1) {
+		if (currentScenarioIndex < flatScenarios.length - 1) {
 			setCurrentScenarioIndex(currentScenarioIndex + 1);
 		} else {
 			// Save responses and show results
@@ -137,7 +140,7 @@ export default function VolitionalSheetPage() {
 			<div className="wrapper">
 				<h1>{sheet.title}</h1>
 				<VolitionalSheetResults
-					scenarios={sheet.scenarios}
+					categories={sheet.categories}
 					responses={responses}
 					onEdit={handleEditResponses}
 				/>
@@ -158,7 +161,7 @@ export default function VolitionalSheetPage() {
 
 			<div style={{ marginBottom: 24 }}>
 				<p>
-					Scenario {currentScenarioIndex + 1} of {sheet.scenarios.length}
+					Scenario {currentScenarioIndex + 1} of {flatScenarios.length}
 				</p>
 			</div>
 
@@ -176,7 +179,7 @@ export default function VolitionalSheetPage() {
 					Previous
 				</button>
 				<button onClick={handleNextScenario}>
-					{currentScenarioIndex === sheet.scenarios.length - 1
+					{currentScenarioIndex === flatScenarios.length - 1
 						? "View Results"
 						: "Next"}
 				</button>

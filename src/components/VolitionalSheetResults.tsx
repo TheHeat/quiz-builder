@@ -1,41 +1,58 @@
 import React from "react";
-import { Scenario, VolitionalSheetResponse } from "../lib/types";
+import { Category, VolitionalSheetResponse } from "../lib/types";
 
 interface VolitionalSheetResultsProps {
-	scenarios: Scenario[];
+	categories: Category[];
 	responses: VolitionalSheetResponse[];
 	onEdit: () => void;
 }
 
 export default function VolitionalSheetResults({
-	scenarios,
+	categories,
 	responses,
 	onEdit,
 }: VolitionalSheetResultsProps) {
-	const scenarioMap = new Map(scenarios.map((s) => [s.id, s]));
+	const responseMap = new Map(responses.map((r) => [r.scenarioId, r]));
 
 	return (
 		<div>
 			<h1>Your Responses</h1>
-			<div style={{ marginBottom: 24 }}>
-				{responses.map((response) => {
-					const scenario = scenarioMap.get(response.scenarioId);
-					if (!scenario) return null;
 
-					const optionLabels = response.selectedOptions
-						.map((opt) => opt.label)
-						.join(", ");
+			<div style={{ marginBottom: 24 }}>
+				{categories.map((cat) => {
+					// collect responses in this category
+					const items = cat.scenarios
+						.map((s) => ({ scenario: s, response: responseMap.get(s.id) }))
+						.filter((sr) => sr.response)
+						.map((sr) => ({ scenario: sr.scenario, response: sr.response! }));
+
+					if (items.length === 0) return null;
 
 					return (
 						<div
-							key={response.scenarioId}
-							style={{ marginBottom: 16 }}
+							key={cat.id}
+							style={{ marginBottom: 20 }}
 						>
-							<p>
-								<strong>
-									If {scenario.text}, I will {optionLabels}
-								</strong>
-							</p>
+							<h2>{cat.title}</h2>
+							{cat.description && <p>{cat.description}</p>}
+
+							{items.map(({ scenario, response }) => {
+								const optionLabels = response.selectedOptions
+									.map((opt) => opt.label)
+									.join(", ");
+								return (
+									<div
+										key={response.scenarioId}
+										style={{ marginBottom: 12 }}
+									>
+										<p>
+											<strong>
+												If {scenario.text}, I will {optionLabels}
+											</strong>
+										</p>
+									</div>
+								);
+							})}
 						</div>
 					);
 				})}
