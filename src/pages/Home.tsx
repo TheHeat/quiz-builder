@@ -52,7 +52,7 @@ export default function Home() {
 
 	return (
 		<div className="wrapper">
-			<h1>Available Quizzes</h1>
+			<h1>Quizzes</h1>
 			<ul>
 				{quizzes.map((q) => (
 					<li key={q.slug}>
@@ -62,18 +62,7 @@ export default function Home() {
 				))}
 			</ul>
 
-			<div style={{ marginTop: 12 }}>
-				<button
-					onClick={() => {
-						quizzes.forEach((q) => clearAnswers(q.slug));
-						alert("Cleared saved answers for all quizzes.");
-					}}
-				>
-					Clear saved answers for all quizzes
-				</button>
-			</div>
-
-			<h1 style={{ marginTop: 32 }}>Available Volitional Sheets</h1>
+			<h1>Volitional Sheets</h1>
 			<ul>
 				{sheets.map((s) => (
 					<li key={s.slug}>
@@ -83,14 +72,22 @@ export default function Home() {
 				))}
 			</ul>
 
-			<div style={{ marginTop: 12 }}>
+			<div>
+				<button
+					onClick={() => {
+						quizzes.forEach((q) => clearAnswers(q.slug));
+						alert("Cleared saved quizzes.");
+					}}
+				>
+					Clear all quizzes
+				</button>
 				<button
 					onClick={() => {
 						sheets.forEach((s) => clearVolitionalSheetResponses(s.slug));
-						alert("Cleared saved responses for all volitional sheets.");
+						alert("Cleared saved volitional sheets.");
 					}}
 				>
-					Clear saved responses for all volitional sheets
+					Clear all volitional sheets
 				</button>
 			</div>
 		</div>
