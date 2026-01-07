@@ -60,3 +60,31 @@ export type Result = {
 	average?: number;
 	overall?: number;
 };
+
+export type VolitionalOption = {
+	id: string;
+	label: string;
+};
+
+export type Scenario = {
+	id: string;
+	text: string;
+	options: VolitionalOption[];
+};
+
+export type VolitionalSheet = {
+	id: string;
+	title: string;
+	description?: string;
+	scenarios: Scenario[];
+};
+
+export type SelectedOption = {
+	id: string;
+	label: string;
+};
+
+export type VolitionalSheetResponse = {
+	scenarioId: string;
+	selectedOptions: SelectedOption[];
+};
