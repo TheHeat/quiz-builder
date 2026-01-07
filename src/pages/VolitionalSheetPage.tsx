@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
 import {
 	VolitionalSheet,
 	Scenario,
@@ -138,6 +138,7 @@ export default function VolitionalSheetPage() {
 	if (pageState === "results") {
 		return (
 			<div className="wrapper">
+				<Link to="/">← Back</Link>
 				<h1>{sheet.title}</h1>
 				<VolitionalSheetResults
 					categories={sheet.categories}
@@ -156,6 +157,8 @@ export default function VolitionalSheetPage() {
 
 	return (
 		<div className="wrapper">
+			<Link to="/">← Back</Link>
+
 			<h1>{sheet.title}</h1>
 			{sheet.description && <p>{sheet.description}</p>}
 
@@ -183,7 +186,6 @@ export default function VolitionalSheetPage() {
 						? "View Results"
 						: "Next"}
 				</button>
-				<button onClick={handleHome}>Cancel</button>
 			</div>
 		</div>
 	);

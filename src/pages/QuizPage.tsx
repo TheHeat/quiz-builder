@@ -63,13 +63,14 @@ export default function QuizPage() {
 	if (loading)
 		return (
 			<div className="wrapper">
-				{" "}
-				<p>Loading…</p>{" "}
+				<Link to="/">← Back</Link>
+				<p>Loading…</p>
 			</div>
 		);
 	if (!quiz)
 		return (
 			<div className="wrapper">
+				<Link to="/">← Back</Link>
 				<p>
 					Quiz not found. <Link to="/">Back</Link>
 				</p>
