@@ -4,13 +4,11 @@ import { Category, VolitionalSheetResponse } from "../lib/types";
 interface VolitionalSheetResultsProps {
 	categories: Category[];
 	responses: VolitionalSheetResponse[];
-	onEdit: () => void;
 }
 
 export default function VolitionalSheetResults({
 	categories,
 	responses,
-	onEdit,
 }: VolitionalSheetResultsProps) {
 	const responseMap = new Map(responses.map((r) => [r.scenarioId, r]));
 
@@ -18,7 +16,7 @@ export default function VolitionalSheetResults({
 		<div>
 			<h1>Your Responses</h1>
 
-			<div style={{ marginBottom: 24 }}>
+			<div>
 				{categories.map((cat) => {
 					// collect responses in this category
 					const items = cat.scenarios
@@ -46,9 +44,7 @@ export default function VolitionalSheetResults({
 										style={{ marginBottom: 12 }}
 									>
 										<p>
-											<strong>
-												If {scenario.text}, I will {optionLabels}
-											</strong>
+											If {scenario.text}, I will {optionLabels}
 										</p>
 									</div>
 								);
@@ -57,8 +53,6 @@ export default function VolitionalSheetResults({
 					);
 				})}
 			</div>
-
-			<button onClick={onEdit}>Edit Responses</button>
 		</div>
 	);
 }

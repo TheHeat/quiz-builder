@@ -1,11 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
-import {
-	VolitionalSheet,
-	Scenario,
-	VolitionalSheetResponse,
-	SelectedOption,
-} from "../lib/types";
+import { VolitionalSheetResponse } from "../lib/types";
 import flattenCategories from "../lib/volitional";
 import {
 	loadVolitionalSheetResponses,
@@ -14,17 +9,23 @@ import {
 import ScenarioRenderer from "../components/ScenarioRenderer";
 import VolitionalSheetResults from "../components/VolitionalSheetResults";
 
-type PageState = "scenarios" | "results";
+import { useSheetContext } from "../context/SheetContext";
 
-export default function VolitionalSheetPage() {
+const VolitionalSheetPage = () => {
 	const { slug } = useParams<{ slug: string }>();
 	const navigate = useNavigate();
-
-	const [sheet, setSheet] = useState<VolitionalSheet | null>(null);
-	const [loading, setLoading] = useState(true);
-	const [pageState, setPageState] = useState<PageState>("scenarios");
-	const [currentScenarioIndex, setCurrentScenarioIndex] = useState(0);
-	const [responses, setResponses] = useState<VolitionalSheetResponse[]>([]);
+	const {
+		sheet,
+		setSheet,
+		loading,
+		setLoading,
+		pageState,
+		setPageState,
+		currentScenarioIndex,
+		setCurrentScenarioIndex,
+		responses,
+		setResponses,
+	} = useSheetContext();
 
 	// Load sheet data and existing responses
 	useEffect(() => {
@@ -59,6 +60,7 @@ export default function VolitionalSheetPage() {
 		};
 
 		loadSheet();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [slug]);
 
 	if (loading) return <div className="wrapper">Loading...</div>;
@@ -73,17 +75,23 @@ export default function VolitionalSheetPage() {
 	const selectedOptions = scenarioResponse?.selectedOptions ?? [];
 
 	const handleOptionToggle = (optionId: string, isSelected: boolean) => {
+		if (!sheet) return;
+		const { scenarios: flatScenarios } = flattenCategories(sheet);
+		const currentScenario = flatScenarios[currentScenarioIndex];
+		const scenarioResponse = responses.find(
+			(r) => r.scenarioId === currentScenario.id
+		);
+		const selectedOptions = scenarioResponse?.selectedOptions ?? [];
 		const option = currentScenario.options.find((opt) => opt.id === optionId);
 		if (!option) return;
 
-		setResponses((prev) => {
+		setResponses((prev: VolitionalSheetResponse[]) => {
 			const newResponses = [...prev];
 			const existingIndex = newResponses.findIndex(
 				(r) => r.scenarioId === currentScenario.id
 			);
 
 			if (isSelected) {
-				// Add option
 				const newSelected = [
 					...selectedOptions,
 					{ id: option.id, label: option.label },
@@ -97,7 +105,6 @@ export default function VolitionalSheetPage() {
 					});
 				}
 			} else {
-				// Remove option
 				const newSelected = selectedOptions.filter(
 					(opt) => opt.id !== optionId
 				);
@@ -111,10 +118,10 @@ export default function VolitionalSheetPage() {
 	};
 
 	const handleNextScenario = () => {
+		const { scenarios: flatScenarios } = flattenCategories(sheet!);
 		if (currentScenarioIndex < flatScenarios.length - 1) {
 			setCurrentScenarioIndex(currentScenarioIndex + 1);
 		} else {
-			// Save responses and show results
 			saveVolitionalSheetResponses(slug!, responses);
 			setPageState("results");
 		}
@@ -126,11 +133,6 @@ export default function VolitionalSheetPage() {
 		}
 	};
 
-	const handleEditResponses = () => {
-		setPageState("scenarios");
-		setCurrentScenarioIndex(0);
-	};
-
 	const handleHome = () => {
 		navigate("/");
 	};
@@ -139,11 +141,10 @@ export default function VolitionalSheetPage() {
 		return (
 			<div className="wrapper">
 				<Link to="/">← Back</Link>
-				<h1>{sheet.title}</h1>
+				<h1>{sheet?.title}</h1>
 				<VolitionalSheetResults
-					categories={sheet.categories}
+					categories={sheet?.categories}
 					responses={responses}
-					onEdit={handleEditResponses}
 				/>
 				<button
 					onClick={handleHome}
@@ -154,6 +155,9 @@ export default function VolitionalSheetPage() {
 			</div>
 		);
 	}
+
+	if (loading) return <div className="wrapper">Loading...</div>;
+	if (!sheet) return <div className="wrapper">Sheet not found</div>;
 
 	return (
 		<div className="wrapper">
@@ -189,4 +193,6 @@ export default function VolitionalSheetPage() {
 			</div>
 		</div>
 	);
-}
+};
+
+export default VolitionalSheetPage;

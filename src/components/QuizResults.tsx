@@ -1,15 +1,13 @@
 import React from "react";
-import { Quiz, Trait } from "../lib/types";
-import TraitPieChart from "./TraitPieChart";
+import { Quiz } from "../lib/types";
 import { clearAnswers } from "../lib/persist";
 
 type Props = {
 	quiz: Quiz;
-	traits: Trait[];
 	result: any;
 };
 
-export default function ResultSummary({ quiz, traits, result }: Props) {
+export default function QuizResults({ quiz, result }: Props) {
 	// scoring API now returns values in the original quiz scale (e.g. 1..5).
 	const quizMin = quiz.scale?.min ?? 1;
 	const quizMax = quiz.scale?.max ?? 5;
@@ -33,24 +31,32 @@ export default function ResultSummary({ quiz, traits, result }: Props) {
 	};
 
 	const scoreFor = (id: string) => {
-		const v = result?.scores?.[id];
+		const v = result && result.scores ? result.scores[id] : undefined;
 		return typeof v === "number" && !Number.isNaN(v)
 			? v
 			: Number.NEGATIVE_INFINITY;
 	};
 
-	const sortedTraits = [...traits].sort(
+	const sortedTraits = [...(quiz.traits ?? [])].sort(
 		(a, b) => scoreFor(b.id) - scoreFor(a.id)
 	);
+
+	// Guard: if result or result.scores is missing, show a message
+	if (!result || !result.scores) {
+		return (
+			<div>
+				<h2>Results</h2>
+				<p>
+					No results available. Please complete the quiz to see your results.
+				</p>
+			</div>
+		);
+	}
 
 	return (
 		<div>
 			<h2>Results</h2>
-			{typeof result?.average === "number" && (
-				<div style={{ marginBottom: 12 }}>
-					{result?.scores && <TraitPieChart />}
-				</div>
-			)}
+
 			<div>
 				{sortedTraits.map((t) => (
 					<div
@@ -62,8 +68,8 @@ export default function ResultSummary({ quiz, traits, result }: Props) {
 						<p>
 							Score:{" "}
 							{showPercentage
-								? formatPercentage(result.scores?.[t.id] ?? NaN)
-								: formatFraction(result.scores?.[t.id] ?? NaN)}
+								? formatPercentage(result.scores[t.id] ?? NaN)
+								: formatFraction(result.scores[t.id] ?? NaN)}
 						</p>
 					</div>
 				))}

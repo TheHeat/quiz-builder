@@ -1,21 +1,11 @@
 import React from "react";
 import { useParams, Link } from "react-router-dom";
-import QuizShell from "../components/QuizShell";
 import QuizResults from "../components/QuizResults";
 import { useQuizContext } from "../context/QuizContext";
 
-export default function QuizPage() {
+export default function QuizResultsPage() {
 	const { slug } = useParams<{ slug: string }>();
-	const {
-		quiz,
-		loading,
-		answers,
-		finished,
-		result,
-		onAnswersUpdate,
-		onFinish,
-		loadQuiz,
-	} = useQuizContext();
+	const { quiz, loading, result, loadQuiz } = useQuizContext();
 
 	console.log("QuizResultsPage render", { slug, quiz, loading, result });
 
@@ -52,19 +42,10 @@ export default function QuizPage() {
 			<Link to="/">← Back</Link>
 			<h1>{quiz.title}</h1>
 			<p>{quiz.description}</p>
-			{!finished ? (
-				<QuizShell
-					quiz={quiz as any}
-					answers={answers}
-					onAnswersUpdate={onAnswersUpdate}
-					onFinish={onFinish}
-				/>
-			) : (
-				<QuizResults
-					quiz={quiz as any}
-					result={result}
-				/>
-			)}
+			<QuizResults
+				quiz={quiz as any}
+				result={result}
+			/>
 		</div>
 	);
 }

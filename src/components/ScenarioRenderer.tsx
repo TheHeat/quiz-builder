@@ -15,28 +15,22 @@ export default function ScenarioRenderer({
 	const selectedIds = new Set(selectedOptions.map((opt) => opt.id));
 
 	return (
-		<div style={{ marginBottom: 24 }}>
+		<div>
 			<h2>{scenario.text}</h2>
-			<div style={{ marginLeft: 16 }}>
+			<ul>
 				{scenario.options.map((option) => (
-					<label
-						key={option.id}
-						style={{
-							display: "block",
-							marginBottom: 8,
-							cursor: "pointer",
-						}}
-					>
-						<input
-							type="checkbox"
-							checked={selectedIds.has(option.id)}
-							onChange={(e) => onSelectionChange(option.id, e.target.checked)}
-							style={{ marginRight: 8 }}
-						/>
-						{option.label}
-					</label>
+					<li>
+						<label key={option.id}>
+							<input
+								type="checkbox"
+								checked={selectedIds.has(option.id)}
+								onChange={(e) => onSelectionChange(option.id, e.target.checked)}
+							/>
+							{option.label}
+						</label>
+					</li>
 				))}
-			</div>
+			</ul>
 		</div>
 	);
 }
