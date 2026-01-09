@@ -6,7 +6,13 @@ import React, {
 	ReactNode,
 } from "react";
 import { computeTraitScores } from "../lib/scoring";
-import { saveAnswers, loadAnswers, saveResults, loadResults, clearResults } from "../lib/persist";
+import {
+	saveAnswers,
+	loadAnswers,
+	saveResults,
+	loadResults,
+	clearResults,
+} from "../lib/persist";
 
 interface QuizContextType {
 	quiz: any | null;
