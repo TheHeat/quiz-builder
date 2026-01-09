@@ -38,114 +38,114 @@
 	"questions": [
 		{
 			"id": "q1",
-			"text": "Someone to help you if you were confined to bed",
+			"text": "How often would you be able to find someone to help you if you were confined to bed?",
 			"type": "likert",
 			"trait_weights": [{ "traitId": "tangible" }]
 		},
 		{
 			"id": "q2",
-			"text": "Someone you can count on to listen to you  when you need to talk",
+			"text": "How often would you be able to find someone you can count on to listen to you  when you need to talk?",
 			"type": "likert",
 			"trait_weights": [{ "traitId": "emotional" }]
 		},
 		{
 			"id": "q3",
-			"text": "Someone to give you good advice about a  crisis ",
+			"text": "How often would you be able to find someone to give you good advice about a  crisis ?",
 			"type": "likert",
 			"trait_weights": [{ "traitId": "emotional" }]
 		},
 		{
 			"id": "q4",
-			"text": "Someone to take you to the doctor if you  needed it ",
+			"text": "How often would you be able to find someone to take you to the doctor if you  needed it ?",
 			"type": "likert",
 			"trait_weights": [{ "traitId": "tangible" }]
 		},
 		{
 			"id": "q5",
-			"text": "Someone who shows you love and  affection .",
+			"text": "How often would you be able to find someone who shows you love and  affection .?",
 			"type": "likert",
 			"trait_weights": [{ "traitId": "affectionate" }]
 		},
 		{
 			"id": "q6",
-			"text": "Someone to have a good time with",
+			"text": "How often would you be able to find someone to have a good time with?",
 			"type": "likert",
 			"trait_weights": [{ "traitId": "positive-social" }]
 		},
 		{
 			"id": "q7",
-			"text": "Someone to give you information to help  you understand a situation",
+			"text": "How often would you be able to find someone to give you information to help  you understand a situation?",
 			"type": "likert",
 			"trait_weights": [{ "traitId": "emotional" }]
 		},
 		{
 			"id": "q8",
-			"text": "Someone to confide in or talk to about  yourself or your problems",
+			"text": "How often would you be able to find someone to confide in or talk to about  yourself or your problems?",
 			"type": "likert",
 			"trait_weights": [{ "traitId": "emotional" }]
 		},
 		{
 			"id": "q9",
-			"text": "Someone who hugs you",
+			"text": "How often would you be able to find someone who hugs you?",
 			"type": "likert",
 			"trait_weights": [{ "traitId": "affectionate" }]
 		},
 		{
 			"id": "q10",
-			"text": "Someone to get together with for relaxation",
+			"text": "How often would you be able to find someone to get together with for relaxation?",
 			"type": "likert",
 			"trait_weights": [{ "traitId": "positive-social" }]
 		},
 		{
 			"id": "q11",
-			"text": "Someone to prepare your meals if you  were unable to do it yourself",
+			"text": "How often would you be able to find someone to prepare your meals if you  were unable to do it yourself?",
 			"type": "likert",
 			"trait_weights": [{ "traitId": "tangible" }]
 		},
 		{
 			"id": "q12",
-			"text": "Someone whose advice you really want",
+			"text": "How often would you be able to find someone whose advice you really want?",
 			"type": "likert",
 			"trait_weights": [{ "traitId": "emotional" }]
 		},
 		{
 			"id": "q13",
-			"text": "Someone to do things with to help you get  your mind off things",
+			"text": "How often would you be able to find someone to do things with to help you get your mind off things?",
 			"type": "likert"
 		},
 		{
 			"id": "q14",
-			"text": "Someone to help you with daily chores  if you were sick",
+			"text": "How often would you be able to find someone to help you with daily chores if you were sick?",
 			"type": "likert",
 			"trait_weights": [{ "traitId": "tangible" }]
 		},
 		{
 			"id": "q15",
-			"text": "Someone to share your most private  worries and fears with",
+			"text": "How often would you be able to find someone to share your most private  worries and fears with?",
 			"type": "likert",
 			"trait_weights": [{ "traitId": "affectionate" }]
 		},
 		{
 			"id": "q16",
-			"text": "Someone to turn to for suggestions about  how to deal with a personal problem ",
+			"text": "How often would you be able to find someone to turn to for suggestions about  how to deal with a personal problem?",
 			"type": "likert",
 			"trait_weights": [{ "traitId": "emotional" }]
 		},
 		{
 			"id": "q17",
-			"text": "Someone to do something enjoyable with",
+			"text": "How often would you be able to find someone to do something enjoyable with?",
 			"type": "likert",
 			"trait_weights": [{ "traitId": "positive-social" }]
 		},
 		{
 			"id": "q18",
-			"text": "Someone who understands your problems",
+			"text": "How often would you be able to find someone who understands your problems?",
 			"type": "likert",
 			"trait_weights": [{ "traitId": "emotional" }]
 		},
 		{
 			"id": "q19",
-			"text": "Someone to love and make you feel wanted",
+			"text": "How often would you be able to find someone to love and make you feel wanted?",
 			"type": "likert",
 			"trait_weights": [{ "traitId": "affectionate" }]
 		}
