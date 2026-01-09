@@ -16,50 +16,20 @@ const VolitionalSheetPage = () => {
 	const navigate = useNavigate();
 	const {
 		sheet,
-		setSheet,
 		loading,
-		setLoading,
 		pageState,
 		setPageState,
 		currentScenarioIndex,
 		setCurrentScenarioIndex,
 		responses,
 		setResponses,
+		loadSheetBySlug,
 	} = useSheetContext();
 
-	// Load sheet data and existing responses
 	useEffect(() => {
-		const loadSheet = async () => {
-			if (!slug) return;
-			try {
-				const modules = import.meta.glob(
-					"/data/volitional-sheets/*/sheet.json",
-					{
-						query: "?json",
-					}
-				) as Record<string, () => Promise<any>>;
-
-				for (const [path, loader] of Object.entries(modules)) {
-					const parts = path.split("/");
-					const slugFromPath = parts[3];
-					if (slugFromPath === slug) {
-						const data = await loader();
-						setSheet(data);
-
-						// Load any existing responses
-						const saved = loadVolitionalSheetResponses(slug);
-						setResponses(saved.length > 0 ? saved : []);
-						setLoading(false);
-						return;
-					}
-				}
-			} catch (e) {
-				console.error("Failed to load sheet", e);
-			}
-			setLoading(false);
-		};
-
-		loadSheet();
+		if (slug) {
+			loadSheetBySlug(slug);
+		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [slug]);
 
@@ -85,36 +55,32 @@ const VolitionalSheetPage = () => {
 		const option = currentScenario.options.find((opt) => opt.id === optionId);
 		if (!option) return;
 
-		setResponses((prev: VolitionalSheetResponse[]) => {
-			const newResponses = [...prev];
-			const existingIndex = newResponses.findIndex(
-				(r) => r.scenarioId === currentScenario.id
-			);
+		const newResponses = [...responses];
+		const existingIndex = newResponses.findIndex(
+			(r) => r.scenarioId === currentScenario.id
+		);
 
-			if (isSelected) {
-				const newSelected = [
-					...selectedOptions,
-					{ id: option.id, label: option.label },
-				];
-				if (existingIndex >= 0) {
-					newResponses[existingIndex].selectedOptions = newSelected;
-				} else {
-					newResponses.push({
-						scenarioId: currentScenario.id,
-						selectedOptions: newSelected,
-					});
-				}
+		if (isSelected) {
+			const newSelected = [
+				...selectedOptions,
+				{ id: option.id, label: option.label },
+			];
+			if (existingIndex >= 0) {
+				newResponses[existingIndex].selectedOptions = newSelected;
 			} else {
-				const newSelected = selectedOptions.filter(
-					(opt) => opt.id !== optionId
-				);
-				if (existingIndex >= 0) {
-					newResponses[existingIndex].selectedOptions = newSelected;
-				}
+				newResponses.push({
+					scenarioId: currentScenario.id,
+					selectedOptions: newSelected,
+				});
 			}
+		} else {
+			const newSelected = selectedOptions.filter((opt) => opt.id !== optionId);
+			if (existingIndex >= 0) {
+				newResponses[existingIndex].selectedOptions = newSelected;
+			}
+		}
 
-			return newResponses;
-		});
+		setResponses(newResponses);
 	};
 
 	const handleNextScenario = () => {
