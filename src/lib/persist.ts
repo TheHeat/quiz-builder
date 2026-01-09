@@ -1,3 +1,32 @@
+// Quiz Results persistence
+export function saveResults(quizId: string, results: any) {
+	try {
+		localStorage.setItem(
+			`${prefix}:results:${quizId}`,
+			JSON.stringify(results)
+		);
+	} catch (e) {
+		// ignore
+	}
+}
+
+export function loadResults(quizId: string): any | null {
+	try {
+		const raw = localStorage.getItem(`${prefix}:results:${quizId}`);
+		if (!raw) return null;
+		return JSON.parse(raw);
+	} catch (e) {
+		return null;
+	}
+}
+
+export function clearResults(quizId: string) {
+	try {
+		localStorage.removeItem(`${prefix}:results:${quizId}`);
+	} catch (e) {
+		// ignore
+	}
+}
 import { Answer, VolitionalSheetResponse } from "./types";
 
 const prefix = "quiz-builder";

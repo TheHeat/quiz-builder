@@ -1,6 +1,6 @@
 import React from "react";
 import { Quiz } from "../lib/types";
-import { clearAnswers } from "../lib/persist";
+import { clearAnswers, clearResults } from "../lib/persist";
 
 type Props = {
 	quiz: Quiz;
@@ -75,22 +75,24 @@ export default function QuizResults({ quiz, result }: Props) {
 				))}
 			</div>
 			<div>
-				<button
-					onClick={() => {
-						clearAnswers(quiz.id);
-						window.location.reload();
-					}}
-				>
-					Take again
-				</button>
-				<button
-					onClick={() => {
-						clearAnswers(quiz.id);
-						window.location.href = "/";
-					}}
-				>
-					Back To Home
-				</button>
+				   <button
+					   onClick={() => {
+						   clearAnswers(quiz.id);
+						   clearResults(quiz.id);
+						   window.location.reload();
+					   }}
+				   >
+					   Take again
+				   </button>
+				   <button
+					   onClick={() => {
+						   clearAnswers(quiz.id);
+						   clearResults(quiz.id);
+						   window.location.href = "/";
+					   }}
+				   >
+					   Back To Home
+				   </button>
 			</div>
 		</div>
 	);

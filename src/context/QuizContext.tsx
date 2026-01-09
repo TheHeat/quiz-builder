@@ -6,7 +6,7 @@ import React, {
 	ReactNode,
 } from "react";
 import { computeTraitScores } from "../lib/scoring";
-import { saveAnswers, loadAnswers } from "../lib/persist";
+import { saveAnswers, loadAnswers, saveResults, loadResults, clearResults } from "../lib/persist";
 
 interface QuizContextType {
 	quiz: any | null;
@@ -56,6 +56,9 @@ export function QuizProvider({ children }: { children: ReactNode }) {
 			.then((data) => {
 				setQuiz(data);
 				setAnswers(() => loadAnswers(data.id) || []);
+				// Load results from storage if available
+				const storedResult = loadResults(data.id);
+				setResult(storedResult);
 				setLoading(false);
 			})
 			.catch(() => setLoading(false));
@@ -72,11 +75,14 @@ export function QuizProvider({ children }: { children: ReactNode }) {
 				quiz.traits ?? [],
 				{ includeOverall: true }
 			);
-			setResult({
+			const resultObj = {
+				quizId: quiz.id,
 				scores: summary.traitScores,
 				average: summary.average,
 				overall: summary.overall,
-			});
+			};
+			setResult(resultObj);
+			saveResults(quiz.id, resultObj);
 		}
 	}
 
@@ -90,11 +96,14 @@ export function QuizProvider({ children }: { children: ReactNode }) {
 				includeOverall: true,
 			}
 		);
-		setResult({
+		const resultObj = {
+			quizId: quiz.id,
 			scores: summary.traitScores,
 			average: summary.average,
 			overall: summary.overall,
-		});
+		};
+		setResult(resultObj);
+		saveResults(quiz.id, resultObj);
 		setFinished(true);
 	}
 
