@@ -1,7 +1,7 @@
 {
 	"id": "mos-social-support",
-	"title": "MOS Social Support Survey",
-	"description": "The MOS Social Support Survey measures the availability of support, if needed, in several  domains. It is a 19-item multidimensional, self-administered instrument developed for  patients in the Medical Outcomes Study (MOS), a two-year study conducted at RAND of the  process and outcomes of health care for patients with prevalent and treatable chronic  conditions.",
+	"title": "What's your social support profile?",
+	"description": "A strengths-based snapshot of the types of support available to you.",
 	"scale": {
 		"min": 1,
 		"max": 5,
@@ -17,22 +17,22 @@
 		{
 			"id": "emotional",
 			"name": "Emotional/informational support",
-			"description": "Someone to confide in, to listen to you, and to provide advice and information"
+			"description": "This is the kind of support that helps you feel understood, steadied, and mentally clearer. It includes people who listen well, offer reassurance, or help you make sense of what's happening. It’s the experience of having space to talk openly and receiving thoughtful guidance when you want it."
 		},
 		{
 			"id": "tangible",
 			"name": "Tangible support",
-			"description": "Someone to help with daily chores, prepare  meals, or drive you if needed"
+			"description": "This support appears when everyday tasks feel heavier and practical help makes things easier. It might show up as help with chores, meals, transport, or simply easing your load during demanding moments. It’s about reducing pressure so you can focus on your wellbeing during treatment."
 		},
 		{
 			"id": "affectionate",
 			"name": "Affectionate support",
-			"description": "Someone to show you love and affection,  hug you, and make you feel wanted"
+			"description": "This is warmth, closeness, and care expressed in ways that feel comforting to you. It can include physical affection, gentle encouragement, or gestures that make you feel valued and emotionally held. It’s the sense of being loved and supported at a deeper personal level."
 		},
 		{
 			"id": "positive-social",
 			"name": "Positive social interaction",
-			"description": "Someone to have a good time, do  enjoyable things with, get together with  for relaxation"
+			"description": "Positive-social support is the lightness that comes from spending relaxing, enjoyable time with others. These are moments that help you unwind, laugh, or take your mind off treatment for a while. It brings ease, breathing space, and a sense of normality during a challenging journey."
 		}
 	],
 	"questions": [
