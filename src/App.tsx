@@ -6,7 +6,7 @@ import VolitionalSheetPage from "./pages/VolitionalSheetPage";
 
 export default function App() {
 	return (
-		<BrowserRouter>
+		<BrowserRouter basename="/quiz-builder/">
 			<Routes>
 				<Route
 					path="/"
