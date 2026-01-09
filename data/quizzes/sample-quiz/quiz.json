@@ -11,7 +11,8 @@
 			"Neutral",
 			"Agree",
 			"Strongly agree"
-		]
+		],
+		"displayAsPercentage": "true"
 	},
 	"traits": [
 		{

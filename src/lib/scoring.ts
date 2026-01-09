@@ -143,3 +143,38 @@ export function computeTraitScores(
 
 // Note: trait classification was removed in favor of displaying raw averaged
 // trait scores. If you need bucketed labels again add a separate utility.
+
+/**
+ * Convert a score from the original scale to a 0-100 percentage.
+ *
+ * Example (1..5 scale):
+ * 1 -> 0, 3 -> 50, 5 -> 100
+ */
+export function scoreToPercentage(value: number, min = 1, max = 5): number {
+	const clamped = Math.max(min, Math.min(max, value));
+	if (max === min) return 0;
+	return ((clamped - min) / (max - min)) * 100;
+}
+
+/**
+ * Convert a TraitScoresSummary into one where all scores are percentages (0-100).
+ */
+export function traitScoresToPercentages(
+	summary: TraitScoresSummary,
+	min = 1,
+	max = 5
+): TraitScoresSummary {
+	const traitScores: TraitScores = {};
+	for (const [k, v] of Object.entries(summary.traitScores)) {
+		traitScores[k] = scoreToPercentage(v, min, max);
+	}
+
+	return {
+		traitScores,
+		average: scoreToPercentage(summary.average, min, max),
+		overall:
+			typeof summary.overall === "number"
+				? scoreToPercentage(summary.overall, min, max)
+				: undefined,
+	};
+}

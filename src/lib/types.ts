@@ -31,6 +31,8 @@ export type Quiz = {
 	scale?: LikertScale;
 	questions: Question[];
 	traits?: Trait[];
+	/** When true, results should be displayed as 0-100 percentages */
+	displayAsPercentage?: boolean;
 };
 
 export type Answer = {

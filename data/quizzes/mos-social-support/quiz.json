@@ -2,6 +2,7 @@
 	"id": "mos-social-support",
 	"title": "What's your social support profile?",
 	"description": "A strengths-based snapshot of the types of support available to you.",
+	"displayAsPercentage": true,
 	"scale": {
 		"min": 1,
 		"max": 5,

@@ -21,6 +21,16 @@ export default function ResultSummary({ quiz, traits, result }: Props) {
 		return `${formatNumber(v)}/${quizMax}`;
 	};
 
+	const showPercentage = !!quiz.displayAsPercentage;
+
+	const formatPercentage = (v: unknown) => {
+		if (typeof v !== "number" || Number.isNaN(v)) return "N/A";
+		if (quizMax === quizMin) return "N/A";
+		const raw = ((v - quizMin) / (quizMax - quizMin)) * 100;
+		const clamped = Math.max(0, Math.min(100, raw));
+		return `${Math.round(clamped)}%`;
+	};
+
 	const scoreFor = (id: string) => {
 		const v = result?.scores?.[id];
 		return typeof v === "number" && !Number.isNaN(v)
@@ -39,7 +49,10 @@ export default function ResultSummary({ quiz, traits, result }: Props) {
 				<div style={{ marginBottom: 12 }}>
 					{typeof result?.overall === "number" && (
 						<span>
-							<strong>Overall score:</strong> {formatFraction(result.overall)}
+							<strong>Overall score:</strong>{" "}
+							{showPercentage
+								? formatPercentage(result.overall)
+								: formatFraction(result.overall)}
 						</span>
 					)}
 				</div>
@@ -52,7 +65,12 @@ export default function ResultSummary({ quiz, traits, result }: Props) {
 					>
 						<h3>{t.name}</h3>
 						<p>{t.description}</p>
-						<p>Score: {formatFraction(result.scores?.[t.id] ?? NaN)}</p>
+						<p>
+							Score:{" "}
+							{showPercentage
+								? formatPercentage(result.scores?.[t.id] ?? NaN)
+								: formatFraction(result.scores?.[t.id] ?? NaN)}
+						</p>
 					</div>
 				))}
 			</div>
