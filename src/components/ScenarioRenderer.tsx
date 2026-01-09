@@ -17,6 +17,7 @@ export default function ScenarioRenderer({
 	return (
 		<div>
 			<h2>{scenario.text}</h2>
+			<p>I will...</p>
 			<ul>
 				{scenario.options.map((option) => (
 					<li>

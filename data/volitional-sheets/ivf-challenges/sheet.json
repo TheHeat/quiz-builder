@@ -9,7 +9,7 @@
 			"scenarios": [
 				{
 					"id": "scenario-1",
-					"text": "If I’m worried about treatment before it’s started...",
+					"text": "If I’m worried about treatment before it’s started",
 					"options": [
 						{
 							"id": "opt-1-1",
@@ -31,7 +31,7 @@
 				},
 				{
 					"id": "scenario-2",
-					"text": "If I feel a stigma around IVF treatment...",
+					"text": "If I feel a stigma around IVF treatment",
 					"options": [
 						{
 							"id": "opt-2-1",
@@ -49,7 +49,7 @@
 				},
 				{
 					"id": "scenario-3",
-					"text": "If I feel pressure from my family or friends when we talk about treatment...",
+					"text": "If I feel pressure from my family or friends when we talk about treatment",
 					"options": [
 						{
 							"id": "opt-3-1",
@@ -67,7 +67,7 @@
 				},
 				{
 					"id": "scenario-4",
-					"text": "If I feel worried about the cost of treatment...",
+					"text": "If I feel worried about the cost of treatment",
 					"options": [
 						{
 							"id": "opt-4-1",
@@ -85,7 +85,7 @@
 				},
 				{
 					"id": "scenario-5",
-					"text": "If I feel underprepared...",
+					"text": "If I feel underprepared",
 					"options": [
 						{ "id": "opt-5-1", "label": "Attend pre-IVF education sessions" },
 						{
@@ -100,7 +100,7 @@
 				},
 				{
 					"id": "scenario-6",
-					"text": "If I’m worried about the treatment not working...",
+					"text": "If I’m worried about the treatment not working",
 					"options": [
 						{
 							"id": "opt-6-1",
@@ -124,7 +124,7 @@
 			"scenarios": [
 				{
 					"id": "scenario-7",
-					"text": "If I feel physically unwell during treatment...",
+					"text": "If I feel physically unwell during treatment",
 					"options": [
 						{ "id": "opt-7-1", "label": "Take time off work" },
 						{ "id": "opt-7-2", "label": "Preparing mentally" },
@@ -133,7 +133,7 @@
 				},
 				{
 					"id": "scenario-8",
-					"text": "If I’m worried about how my body will react to the treatment...",
+					"text": "If I’m worried about how my body will react to the treatment",
 					"options": [
 						{ "id": "opt-8-1", "label": "Research the effects of treatment" },
 						{ "id": "opt-8-2", "label": "Know possible side effects" },
@@ -146,7 +146,7 @@
 				},
 				{
 					"id": "scenario-9",
-					"text": "If my work or daily activities are affected during treatment...",
+					"text": "If my work or daily activities are affected during treatment",
 					"options": [
 						{ "id": "opt-9-1", "label": "Plan in advance" },
 						{ "id": "opt-9-2", "label": "Take time off" },
@@ -157,7 +157,7 @@
 				},
 				{
 					"id": "scenario-10",
-					"text": "If I feel physically unwell during treatment...",
+					"text": "If I feel physically unwell during treatment",
 					"options": [
 						{ "id": "opt-10-1", "label": "Counselling" },
 						{
@@ -175,7 +175,7 @@
 				},
 				{
 					"id": "scenario-11",
-					"text": "If treatment starts to affect on my relationship...",
+					"text": "If treatment starts to affect on my relationship",
 					"options": [
 						{
 							"id": "opt-11-1",
@@ -191,7 +191,7 @@
 				},
 				{
 					"id": "scenario-12",
-					"text": "If I’m worried that my cycle won’t be successful...",
+					"text": "If I’m worried that my cycle won’t be successful",
 					"options": [
 						{ "id": "opt-12-1", "label": "Counselling" },
 						{
