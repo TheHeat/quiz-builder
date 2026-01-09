@@ -11,7 +11,7 @@ export default function Home() {
 
 	useEffect(() => {
 		// Load quizzes
-		const quizModules = import.meta.glob("/data/quizzes/*/quiz.json", {
+		const quizModules = import.meta.glob("../../data/quizzes/*/quiz.json", {
 			query: "?json",
 		}) as Record<string, () => Promise<any>>;
 		const quizEntries = Object.entries(quizModules);
@@ -30,7 +30,7 @@ export default function Home() {
 
 		// Load volitional sheets
 		const sheetModules = import.meta.glob(
-			"/data/volitional-sheets/*/sheet.json",
+			"../../data/volitional-sheets/*/sheet.json",
 			{
 				query: "?json",
 			}
