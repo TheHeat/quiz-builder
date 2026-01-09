@@ -1,5 +1,6 @@
 import React from "react";
 import { Quiz, Trait } from "../lib/types";
+import TraitPieChart from "./TraitPieChart";
 import { clearAnswers } from "../lib/persist";
 
 type Props = {
@@ -47,14 +48,7 @@ export default function ResultSummary({ quiz, traits, result }: Props) {
 			<h2>Results</h2>
 			{typeof result?.average === "number" && (
 				<div style={{ marginBottom: 12 }}>
-					{typeof result?.overall === "number" && (
-						<span>
-							<strong>Overall score:</strong>{" "}
-							{showPercentage
-								? formatPercentage(result.overall)
-								: formatFraction(result.overall)}
-						</span>
-					)}
+					{result?.scores && <TraitPieChart />}
 				</div>
 			)}
 			<div>
