@@ -1,0 +1,45 @@
+{
+	"id": "ladder-quiz-sample",
+	"title": "Ladder Scoring Sample Quiz",
+	"description": "A sample quiz using ladder scoring (current vs. future).",
+	"scoringType": "ladder",
+	"ladderLabels": ["Now", "Goal"],
+	"displayAsPercentage": "true",
+	"scale": {
+		"min": 1,
+		"max": 5,
+		"labels": [
+			"Strongly disagree",
+			"Disagree",
+			"Neutral",
+			"Agree",
+			"Strongly agree"
+		]
+	},
+	"traits": [
+		{
+			"id": "growth",
+			"name": "Growth Mindset",
+			"description": "Belief in ability to improve."
+		},
+		{
+			"id": "resilience",
+			"name": "Resilience",
+			"description": "Ability to recover from setbacks."
+		}
+	],
+	"questions": [
+		{
+			"id": "q1",
+			"text": "I can learn new things even if they are hard.",
+			"type": "likert",
+			"trait_weights": [{ "traitId": "growth", "weight": 1 }]
+		},
+		{
+			"id": "q2",
+			"text": "I recover quickly after difficulties.",
+			"type": "likert",
+			"trait_weights": [{ "traitId": "resilience", "weight": 1 }]
+		}
+	]
+}

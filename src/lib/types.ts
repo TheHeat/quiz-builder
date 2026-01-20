@@ -33,11 +33,28 @@ export type Quiz = {
 	traits?: Trait[];
 	/** When true, results should be displayed as 0-100 percentages */
 	displayAsPercentage?: boolean;
+	/** Scoring type: 'standard' (default) or 'ladder' */
+	scoringType?: "standard" | "ladder";
+	/** Custom labels for ladder scoring, defaults to ['Current', 'Future'] if not provided */
+	ladderLabels?: [string, string];
+};
+
+/**
+ * For ladder quizzes, value is an object with current and future values.
+ * For standard quizzes, value is as before.
+ */
+export type LadderAnswerValue = {
+	current: number;
+	future: number;
 };
 
 export type Answer = {
 	questionId: string;
-	value: number | string | string[] | null;
+	/**
+	 * For standard quizzes: number | string | string[] | null
+	 * For ladder quizzes: LadderAnswerValue
+	 */
+	value: number | string | string[] | null | LadderAnswerValue;
 };
 
 export type TraitScores = Record<string, number>;

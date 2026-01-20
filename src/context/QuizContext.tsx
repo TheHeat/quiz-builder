@@ -39,10 +39,12 @@ export function useQuizContext() {
 	return ctx;
 }
 
+import { Quiz, Answer, LadderAnswerValue } from "../lib/types";
+
 export function QuizProvider({ children }: { children: ReactNode }) {
-	const [quiz, setQuiz] = useState<any | null>(null);
+	const [quiz, setQuiz] = useState<Quiz | null>(null);
 	const [loading, setLoading] = useState(true);
-	const [answers, setAnswers] = useState<any[]>([]);
+	const [answers, setAnswers] = useState<Answer[]>([]);
 	const [finished, setFinished] = useState(false);
 	const [result, setResult] = useState<any | null>(null);
 
@@ -70,22 +72,17 @@ export function QuizProvider({ children }: { children: ReactNode }) {
 			.catch(() => setLoading(false));
 	}
 
-	function onAnswersUpdate(next: any[]) {
+	function onAnswersUpdate(next: Answer[]) {
 		setAnswers(next);
 		if (quiz) {
 			saveAnswers(quiz.id, next);
 			// Recompute and set result on every answer update
-			const summary = computeTraitScores(
-				quiz as any,
-				next as any,
-				quiz.traits ?? [],
-				{ includeOverall: true }
-			);
+			const summary = computeTraitScores(quiz, next, quiz.traits ?? [], {
+				includeOverall: true,
+			});
 			const resultObj = {
 				quizId: quiz.id,
-				scores: summary.traitScores,
-				average: summary.average,
-				overall: summary.overall,
+				...summary,
 			};
 			setResult(resultObj);
 			saveResults(quiz.id, resultObj);
@@ -94,19 +91,36 @@ export function QuizProvider({ children }: { children: ReactNode }) {
 
 	function onFinish() {
 		if (!quiz) return;
-		const summary = computeTraitScores(
-			quiz as any,
-			answers as any,
-			quiz.traits ?? [],
-			{
-				includeOverall: true,
+		// Enforce all questions answered for ladder quizzes
+		if (quiz.scoringType === "ladder") {
+			for (const q of quiz.questions) {
+				const ans = answers.find((a) => a.questionId === q.id);
+				if (
+					!ans ||
+					typeof ans.value !== "object" ||
+					ans.value == null ||
+					typeof ans.value.current !== "number" ||
+					typeof ans.value.future !== "number"
+				) {
+					alert("Please answer both 'Current' and 'Future' for all questions.");
+					return;
+				}
 			}
-		);
+		} else {
+			for (const q of quiz.questions) {
+				const ans = answers.find((a) => a.questionId === q.id);
+				if (!ans || ans.value == null || ans.value === "") {
+					alert("Please answer all questions.");
+					return;
+				}
+			}
+		}
+		const summary = computeTraitScores(quiz, answers, quiz.traits ?? [], {
+			includeOverall: true,
+		});
 		const resultObj = {
 			quizId: quiz.id,
-			scores: summary.traitScores,
-			average: summary.average,
-			overall: summary.overall,
+			...summary,
 		};
 		setResult(resultObj);
 		saveResults(quiz.id, resultObj);

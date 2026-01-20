@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Quiz, Answer } from "../lib/types";
+import { Quiz, Answer, LadderAnswerValue } from "../lib/types";
 import QuestionRenderer from "./QuestionRenderer";
 
 type Props = {
@@ -17,7 +17,7 @@ export default function QuizShell({
 }: Props) {
 	const [index, setIndex] = useState(0);
 
-	function setAnswer(qId: string, value: number) {
+	function setAnswer(qId: string, value: number | LadderAnswerValue) {
 		const next = answers.filter((a) => a.questionId !== qId);
 		next.push({ questionId: qId, value });
 		onAnswersUpdate(next);
@@ -35,6 +35,15 @@ export default function QuizShell({
 	const currentAnswer = rawAnswer ?? null;
 
 	function isAnswered(value: Answer["value"]) {
+		if (quiz.scoringType === "ladder") {
+			return (
+				value &&
+				typeof value === "object" &&
+				value !== null &&
+				typeof (value as LadderAnswerValue).current === "number" &&
+				typeof (value as LadderAnswerValue).future === "number"
+			);
+		}
 		if (value === null || value === undefined) return false;
 		if (Array.isArray(value)) return value.length > 0;
 		if (typeof value === "string") return value.trim().length > 0;
@@ -57,8 +66,10 @@ export default function QuizShell({
 			<QuestionRenderer
 				question={current}
 				onAnswer={setAnswer}
-				selected={typeof rawAnswer === "number" ? (rawAnswer as number) : null}
+				selected={rawAnswer ?? null}
 				quizScale={quiz.scale}
+				scoringType={quiz.scoringType}
+				ladderLabels={quiz.ladderLabels}
 			/>
 			<div style={{ marginTop: 16 }}>
 				<button

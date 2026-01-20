@@ -7,6 +7,7 @@ type Props = {
 	value: number | null;
 	onChange: (v: number) => void;
 	quizScale?: LikertScaleType;
+	name?: string;
 };
 
 export default function LikertScale({
@@ -14,6 +15,7 @@ export default function LikertScale({
 	value,
 	onChange,
 	quizScale,
+	name,
 }: Props) {
 	// Prefer question-level scale; fall back to quiz-level scale; finally defaults
 	const scale = question.scale ?? quizScale ?? { min: 1, max: 5 };
@@ -38,7 +40,7 @@ export default function LikertScale({
 					>
 						<input
 							type="radio"
-							name={question.id}
+							name={name ?? question.id}
 							checked={value === o}
 							onChange={() => onChange(o)}
 							required

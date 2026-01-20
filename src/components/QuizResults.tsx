@@ -30,19 +30,42 @@ export default function QuizResults({ quiz, result }: Props) {
 		return `${Math.round(clamped)}%`;
 	};
 
+	// For ladder quizzes, result.traitScores is Record<string, { current: number, future: number }>
+	// For standard, it's Record<string, number>
+	const isLadder = quiz.scoringType === "ladder";
+	const ladderLabels = (isLadder && result.ladderLabels) || [
+		"Current",
+		"Future",
+	];
+
 	const scoreFor = (id: string) => {
-		const v = result && result.scores ? result.scores[id] : undefined;
-		return typeof v === "number" && !Number.isNaN(v)
-			? v
-			: Number.NEGATIVE_INFINITY;
+		if (isLadder) {
+			const v =
+				result && result.traitScores ? result.traitScores[id] : undefined;
+			return v && typeof v.current === "number" && typeof v.future === "number"
+				? v
+				: { current: NaN, future: NaN };
+		} else {
+			const v = result && result.scores ? result.scores[id] : undefined;
+			return typeof v === "number" && !Number.isNaN(v)
+				? v
+				: Number.NEGATIVE_INFINITY;
+		}
 	};
 
-	const sortedTraits = [...(quiz.traits ?? [])].sort(
-		(a, b) => scoreFor(b.id) - scoreFor(a.id)
-	);
+	const sortedTraits = [...(quiz.traits ?? [])].sort((a, b) => {
+		if (isLadder) {
+			// Sort by sum of current+future descending
+			const aScore = scoreFor(a.id);
+			const bScore = scoreFor(b.id);
+			return bScore.current + bScore.future - (aScore.current + aScore.future);
+		} else {
+			return scoreFor(b.id) - scoreFor(a.id);
+		}
+	});
 
-	// Guard: if result or result.scores is missing, show a message
-	if (!result || !result.scores) {
+	// Guard: if result or the relevant scores object is missing, show a message
+	if (!result || (isLadder ? !result.traitScores : !result.scores)) {
 		return (
 			<div>
 				<h2>Results</h2>
@@ -65,12 +88,29 @@ export default function QuizResults({ quiz, result }: Props) {
 					>
 						<h3>{t.name}</h3>
 						<p>{t.description}</p>
-						<p>
-							Score:{" "}
-							{showPercentage
-								? formatPercentage(result.scores[t.id] ?? NaN)
-								: formatFraction(result.scores[t.id] ?? NaN)}
-						</p>
+						{isLadder ? (
+							<div>
+								<p>
+									<strong>{ladderLabels[0]}:</strong>{" "}
+									{showPercentage
+										? formatPercentage(scoreFor(t.id).current)
+										: formatFraction(scoreFor(t.id).current)}
+								</p>
+								<p>
+									<strong>{ladderLabels[1]}:</strong>{" "}
+									{showPercentage
+										? formatPercentage(scoreFor(t.id).future)
+										: formatFraction(scoreFor(t.id).future)}
+								</p>
+							</div>
+						) : (
+							<p>
+								Score:{" "}
+								{showPercentage
+									? formatPercentage(result.scores[t.id] ?? NaN)
+									: formatFraction(result.scores[t.id] ?? NaN)}
+							</p>
+						)}
 					</div>
 				))}
 			</div>
