@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import { Quiz } from "../lib/types";
 import { clearAnswers, clearResults } from "../lib/persist";
 
@@ -8,6 +9,7 @@ type Props = {
 };
 
 export default function QuizResults({ quiz, result }: Props) {
+	const navigate = useNavigate();
 	// scoring API now returns values in the original quiz scale (e.g. 1..5).
 	const quizMin = quiz.scale?.min ?? 1;
 	const quizMax = quiz.scale?.max ?? 5;
@@ -38,10 +40,28 @@ export default function QuizResults({ quiz, result }: Props) {
 		"Future",
 	];
 
+	// Helper to get trait scores for ladder quizzes, supporting both traitScores and scores as possible sources
+	const getLadderTraitScores = () => {
+		if (result && result.traitScores) return result.traitScores;
+		// Fallback: if result.scores is in the expected ladder format, use it
+		if (result && result.scores) {
+			const sample = Object.values(result.scores)[0];
+			if (
+				sample &&
+				typeof sample === "object" &&
+				"current" in sample &&
+				"future" in sample
+			) {
+				return result.scores;
+			}
+		}
+		return {};
+	};
+
 	const scoreFor = (id: string) => {
 		if (isLadder) {
-			const v =
-				result && result.traitScores ? result.traitScores[id] : undefined;
+			const traitScores = getLadderTraitScores();
+			const v = traitScores[id];
 			return v && typeof v.current === "number" && typeof v.future === "number"
 				? v
 				: { current: NaN, future: NaN };
@@ -65,7 +85,15 @@ export default function QuizResults({ quiz, result }: Props) {
 	});
 
 	// Guard: if result or the relevant scores object is missing, show a message
-	if (!result || (isLadder ? !result.traitScores : !result.scores)) {
+	let hasScores = false;
+	if (isLadder) {
+		const traitScores = getLadderTraitScores();
+		hasScores = traitScores && Object.keys(traitScores).length > 0;
+	} else {
+		hasScores =
+			result && result.scores && Object.keys(result.scores).length > 0;
+	}
+	if (!result || !hasScores) {
 		return (
 			<div>
 				<h2>Results</h2>
@@ -119,7 +147,7 @@ export default function QuizResults({ quiz, result }: Props) {
 					onClick={() => {
 						clearAnswers(quiz.id);
 						clearResults(quiz.id);
-						window.location.reload();
+						navigate(`/quiz/${quiz.id}`);
 					}}
 				>
 					Take again
