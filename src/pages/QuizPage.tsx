@@ -13,7 +13,6 @@ export default function QuizPage() {
 		finished,
 		result,
 		onAnswersUpdate,
-		onFinish,
 		loadQuiz,
 	} = useQuizContext();
 
@@ -52,19 +51,11 @@ export default function QuizPage() {
 			<Link to="/">← Back</Link>
 			<h1>{quiz.title}</h1>
 			<p>{quiz.description}</p>
-			{!finished ? (
-				<QuizShell
-					quiz={quiz as any}
-					answers={answers}
-					onAnswersUpdate={onAnswersUpdate}
-					onFinish={onFinish}
-				/>
-			) : (
-				<QuizResults
-					quiz={quiz as any}
-					result={result}
-				/>
-			)}
+			<QuizShell
+				quiz={quiz as any}
+				answers={answers}
+				onAnswersUpdate={onAnswersUpdate}
+			/>
 		</div>
 	);
 }

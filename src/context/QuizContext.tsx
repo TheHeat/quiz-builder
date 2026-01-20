@@ -26,7 +26,6 @@ interface QuizContextType {
 	result: any | null;
 	setResult: (result: any | null) => void;
 	onAnswersUpdate: (next: any[]) => void;
-	onFinish: () => void;
 	loadQuiz: (slug: string | undefined) => void;
 }
 
@@ -89,44 +88,6 @@ export function QuizProvider({ children }: { children: ReactNode }) {
 		}
 	}
 
-	function onFinish() {
-		if (!quiz) return;
-		// Enforce all questions answered for ladder quizzes
-		if (quiz.scoringType === "ladder") {
-			for (const q of quiz.questions) {
-				const ans = answers.find((a) => a.questionId === q.id);
-				if (
-					!ans ||
-					typeof ans.value !== "object" ||
-					ans.value == null ||
-					typeof ans.value.current !== "number" ||
-					typeof ans.value.future !== "number"
-				) {
-					alert("Please answer both 'Current' and 'Future' for all questions.");
-					return;
-				}
-			}
-		} else {
-			for (const q of quiz.questions) {
-				const ans = answers.find((a) => a.questionId === q.id);
-				if (!ans || ans.value == null || ans.value === "") {
-					alert("Please answer all questions.");
-					return;
-				}
-			}
-		}
-		const summary = computeTraitScores(quiz, answers, quiz.traits ?? [], {
-			includeOverall: true,
-		});
-		const resultObj = {
-			quizId: quiz.id,
-			...summary,
-		};
-		setResult(resultObj);
-		saveResults(quiz.id, resultObj);
-		setFinished(true);
-	}
-
 	return (
 		<QuizContext.Provider
 			value={{
@@ -141,7 +102,6 @@ export function QuizProvider({ children }: { children: ReactNode }) {
 				result,
 				setResult,
 				onAnswersUpdate,
-				onFinish,
 				loadQuiz,
 			}}
 		>

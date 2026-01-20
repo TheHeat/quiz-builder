@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import { Quiz, Answer, LadderAnswerValue } from "../lib/types";
 import QuestionRenderer from "./QuestionRenderer";
 
@@ -6,16 +7,12 @@ type Props = {
 	quiz: Quiz;
 	answers: Answer[];
 	onAnswersUpdate: (a: Answer[]) => void;
-	onFinish: () => void;
 };
 
-export default function QuizShell({
-	quiz,
-	answers,
-	onAnswersUpdate,
-	onFinish,
-}: Props) {
+export default function QuizShell({ quiz, answers, onAnswersUpdate }: Props) {
 	const [index, setIndex] = useState(0);
+	const navigate = useNavigate();
+	const { slug } = useParams();
 
 	function setAnswer(qId: string, value: number | LadderAnswerValue) {
 		const next = answers.filter((a) => a.questionId !== qId);
@@ -26,8 +23,14 @@ export default function QuizShell({
 	const current = quiz.questions[index];
 
 	function next() {
-		if (index < quiz.questions.length - 1) setIndex(index + 1);
-		else onFinish();
+		if (index < quiz.questions.length - 1) {
+			setIndex(index + 1);
+		} else {
+			// Go to results page
+			if (slug) {
+				navigate(`/quiz/${slug}/results`);
+			}
+		}
 	}
 
 	// determine whether the current question has an answer
